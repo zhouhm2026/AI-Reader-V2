@@ -1,0 +1,2 @@
+# Cloudflare Pages SPA fallback for demo routes
+/demo/* /demo/index.html 200

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Reader V2 — 本地部署的智能小说阅读理解系统</title>
+  <meta name="description" content="利用 LLM 将小说文本转化为结构化知识图谱，提供关系图、多层级世界地图、时间线等多维可视化。数据全部存储在本机。">
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI Reader V2 — 智能小说阅读理解系统">
+  <meta property="og:description" content="本地部署 · LLM 驱动 · 关系图 / 世界地图 / 时间线 / 百科全书 · 数据不离开你的电脑">
+  <meta property="og:type" content="website">
+  <!-- TODO: 替换为实际 OG 图片 URL -->
+  <!-- <meta property="og:image" content="https://your-domain.com/assets/og-image.png"> -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff', 100:'#dbeafe', 200:'#bfdbfe', 500:'#3b82f6', 600:'#2563eb', 700:'#1d4ed8' },
+            accent:  { 50:'#f5f3ff', 500:'#8b5cf6', 600:'#7c3aed' },
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- ============ HERO ============ -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
+      <!-- Badges -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="License" class="h-5">
+        <img src="https://img.shields.io/badge/python-≥3.9-3776ab?logo=python&logoColor=white" alt="Python" class="h-5">
+        <img src="https://img.shields.io/badge/node-≥22-339933?logo=node.js&logoColor=white" alt="Node.js" class="h-5">
+        <img src="https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=white" alt="React" class="h-5">
+        <img src="https://img.shields.io/badge/typescript-5.9-3178c6?logo=typescript&logoColor=white" alt="TypeScript" class="h-5">
+        <img src="https://img.shields.io/badge/ollama-supported-FF6B35" alt="Ollama" class="h-5">
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+        <span class="text-primary-600">AI Reader</span> V2
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-4">
+        本地部署的智能小说阅读理解系统
+      </p>
+      <p class="text-base text-gray-500 max-w-2xl mx-auto mb-10">
+        利用 LLM 将小说文本转化为结构化知识图谱，提供关系图、多层级世界地图、时间线等多维可视化，以及基于原文的智能问答。<strong>数据全部存储在本机。</strong>
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+        <a href="./demo/honglou/graph" class="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-primary-600 text-white font-semibold text-lg hover:bg-primary-700 transition shadow-lg shadow-primary-600/25">
+          在线体验 Demo
+        </a>
+        <a href="https://github.com/mouseart2025/AI-Reader-V2" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-8 py-3 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold text-lg hover:border-primary-500 hover:text-primary-600 transition">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+
+      <!-- Screenshot Placeholder -->
+      <!-- TODO: 替换为实际功能截图 — 主界面总览 -->
+      <div class="max-w-4xl mx-auto rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 aspect-video flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"/></svg>
+          <p class="text-sm">功能截图 · 待添加</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">核心功能 Features</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">上传一本小说，AI 自动分析全书，生成多维可视化</p>
+
+      <div class="grid sm:grid-cols-2 gap-8">
+        <!-- Feature 1: 关系图 -->
+        <div class="group rounded-2xl border border-gray-200 p-6 hover:border-primary-300 hover:shadow-lg transition">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">🕸️</span>
+            <h3 class="text-xl font-semibold">智能知识图谱 Knowledge Graph</h3>
+          </div>
+          <p class="text-gray-600 mb-4">力导向人物关系图，自动识别 70+ 种关系类型，六大分类着色（血亲/亲密/师承/社交/敌对/其他），实体别名自动合并。</p>
+          <!-- TODO: 替换为实际截图 — 关系图 -->
+          <div class="rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 aspect-video flex items-center justify-center">
+            <span class="text-gray-400 text-sm">关系图截图 · 待添加</span>
+          </div>
+        </div>
+
+        <!-- Feature 2: 世界地图 -->
+        <div class="group rounded-2xl border border-gray-200 p-6 hover:border-primary-300 hover:shadow-lg transition">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">🗺️</span>
+            <h3 class="text-xl font-semibold">多层级世界地图 World Map</h3>
+          </div>
+          <p class="text-gray-600 mb-4">从小说文本全自动生成交互式地图。宏观区域划分、多空间层、传送门连接、程序化地形生成、人物轨迹动画、手绘风格渲染。</p>
+          <!-- TODO: 替换为实际截图 — 世界地图 -->
+          <div class="rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 aspect-video flex items-center justify-center">
+            <span class="text-gray-400 text-sm">世界地图截图 · 待添加</span>
+          </div>
+        </div>
+
+        <!-- Feature 3: 时间线 -->
+        <div class="group rounded-2xl border border-gray-200 p-6 hover:border-primary-300 hover:shadow-lg transition">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">⏳</span>
+            <h3 class="text-xl font-semibold">多泳道时间线 Timeline</h3>
+          </div>
+          <p class="text-gray-600 mb-4">多泳道事件线，智能降噪，关系变化事件追踪，情绪基调标签，按章节浏览和按类型过滤。</p>
+          <!-- TODO: 替换为实际截图 — 时间线 -->
+          <div class="rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 aspect-video flex items-center justify-center">
+            <span class="text-gray-400 text-sm">时间线截图 · 待添加</span>
+          </div>
+        </div>
+
+        <!-- Feature 4: 百科全书 -->
+        <div class="group rounded-2xl border border-gray-200 p-6 hover:border-primary-300 hover:shadow-lg transition">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">📖</span>
+            <h3 class="text-xl font-semibold">百科全书 Encyclopedia</h3>
+          </div>
+          <p class="text-gray-600 mb-4">分类浏览人物/地点/物品/组织/概念，全文搜索，地点层级树，空间关系面板，场景索引回溯原文。</p>
+          <!-- TODO: 替换为实际截图 — 百科全书 -->
+          <div class="rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 aspect-video flex items-center justify-center">
+            <span class="text-gray-400 text-sm">百科全书截图 · 待添加</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section id="demo" class="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">在线体验 Demo</h2>
+      <p class="text-gray-500 text-center mb-12">无需安装，直接在浏览器中体验完整的交互式分析效果</p>
+
+      <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <!-- 红楼梦 Demo -->
+        <div class="relative rounded-2xl border border-gray-200 p-6 text-center hover:border-primary-300 hover:shadow-lg transition">
+          <div class="text-5xl mb-4">📕</div>
+          <h3 class="text-xl font-semibold mb-2">红楼梦</h3>
+          <p class="text-gray-500 text-sm mb-4">122 回 · 669 人物 · 776 关系 · 756 地点</p>
+          <a href="./demo/honglou/graph" class="inline-block px-6 py-2 rounded-lg bg-primary-600 text-white font-semibold hover:bg-primary-700 transition">
+            体验 Demo
+          </a>
+        </div>
+
+        <!-- 西游记 Demo -->
+        <div class="relative rounded-2xl border border-gray-200 p-6 text-center hover:border-primary-300 hover:shadow-lg transition">
+          <div class="text-5xl mb-4">📗</div>
+          <h3 class="text-xl font-semibold mb-2">西游记</h3>
+          <p class="text-gray-500 text-sm mb-4">100 回 · 747 人物 · 619 关系 · 817 地点</p>
+          <a href="./demo/xiyouji/graph" class="inline-block px-6 py-2 rounded-lg bg-primary-600 text-white font-semibold hover:bg-primary-700 transition">
+            体验 Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST / TRANSPARENCY ============ -->
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">隐私与技术透明 Privacy & Trust</h2>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="text-center p-6">
+          <div class="text-4xl mb-4">🏠</div>
+          <h3 class="font-semibold mb-2">完全本地运行</h3>
+          <p class="text-gray-500 text-sm">所有计算在你的电脑上完成，无需联网即可使用（搭配 Ollama 本地模型）</p>
+        </div>
+        <div class="text-center p-6">
+          <div class="text-4xl mb-4">🔒</div>
+          <h3 class="font-semibold mb-2">数据不离开本机</h3>
+          <p class="text-gray-500 text-sm">小说文本、分析结果、对话记录全部存储在本地 SQLite，不上传任何数据</p>
+        </div>
+        <div class="text-center p-6">
+          <div class="text-4xl mb-4">📂</div>
+          <h3 class="font-semibold mb-2">开源 AGPL v3</h3>
+          <p class="text-gray-500 text-sm">完整源代码公开，自由审查、修改和分发。个人和学术使用完全免费</p>
+        </div>
+        <div class="text-center p-6">
+          <div class="text-4xl mb-4">🤖</div>
+          <h3 class="font-semibold mb-2">多 LLM 后端</h3>
+          <p class="text-gray-500 text-sm">支持 Ollama 本地模型和 10 大云端 API（DeepSeek、Claude、GPT、Gemini 等）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="py-16 sm:py-24 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">版本对比 Pricing</h2>
+      <p class="text-gray-500 text-center mb-12">核心分析和可视化功能对所有用户完全开放</p>
+
+      <div class="grid sm:grid-cols-2 gap-8">
+        <!-- Free -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-8">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl font-bold mb-1">Free</h3>
+            <p class="text-gray-500">开源免费版</p>
+            <div class="text-4xl font-bold mt-4">¥0</div>
+            <p class="text-gray-400 text-sm">永久免费</p>
+          </div>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 最多 5 本书</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 完整分析 + 全部可视化</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 智能问答 (RAG)</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> Markdown 导出</li>
+            <li class="flex items-start gap-2"><span class="text-gray-300 mt-0.5">✗</span><span class="text-gray-400"> DOCX / PDF / XLSX 导出</span></li>
+            <li class="flex items-start gap-2"><span class="text-gray-300 mt-0.5">✗</span><span class="text-gray-400"> 数据导入/导出</span></li>
+          </ul>
+          <a href="https://github.com/mouseart2025/AI-Reader-V2" target="_blank" rel="noopener" class="block mt-8 text-center px-6 py-3 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:border-primary-500 hover:text-primary-600 transition">
+            免费下载
+          </a>
+        </div>
+
+        <!-- Pro -->
+        <div class="rounded-2xl border-2 border-primary-500 bg-white p-8 relative">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-4 py-1 rounded-full">推荐</span>
+          <div class="text-center mb-6">
+            <h3 class="text-2xl font-bold mb-1">Pro</h3>
+            <p class="text-gray-500">完整功能版</p>
+            <div class="text-4xl font-bold mt-4 text-primary-600">Coming Soon</div>
+            <p class="text-gray-400 text-sm">一次购买，永久使用</p>
+          </div>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> <strong>无限</strong>书目</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 完整分析 + 全部可视化</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 智能问答 (RAG)</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> <strong>全格式导出</strong> (MD + DOCX + PDF + XLSX)</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 数据导入/导出</li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-0.5">✓</span> 批量对话导出</li>
+          </ul>
+          <span class="block mt-8 text-center px-6 py-3 rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed">
+            即将推出
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD / QUICK START ============ -->
+  <section id="download" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">快速开始 Quick Start</h2>
+      <p class="text-gray-500 text-center mb-12">三步启动，5 分钟开始分析你的第一本小说</p>
+
+      <div class="space-y-6">
+        <!-- Step 1 -->
+        <div class="flex gap-4 items-start">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm">1</span>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-2">安装并启动 Ollama（本地 LLM）</h3>
+            <p class="text-gray-500 text-sm mb-2">
+              前往 <a href="https://ollama.com/" target="_blank" rel="noopener" class="text-primary-600 underline">ollama.com</a> 下载安装，然后拉取推荐模型：
+            </p>
+            <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 text-sm overflow-x-auto"><code>ollama pull qwen3:8b &amp;&amp; ollama serve</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-4 items-start">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm">2</span>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-2">启动后端</h3>
+            <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 text-sm overflow-x-auto"><code>cd backend &amp;&amp; uv sync &amp;&amp; uv run uvicorn src.api.main:app --reload</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-4 items-start">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm">3</span>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-2">启动前端（新终端）</h3>
+            <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 text-sm overflow-x-auto"><code>cd frontend &amp;&amp; npm install &amp;&amp; npm run dev</code></pre>
+            <p class="text-gray-500 text-sm mt-2">打开 <code class="bg-gray-100 px-1.5 py-0.5 rounded text-primary-600">http://localhost:5173</code> 即可使用。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-gray-500 mb-4">环境要求：Python 3.9+ / Node.js 22+ / <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener" class="text-primary-600 underline">uv</a></p>
+        <a href="https://github.com/mouseart2025/AI-Reader-V2" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-gray-900 text-white font-semibold hover:bg-gray-800 transition">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          查看源代码
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="py-12 bg-gray-900 text-gray-400">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+        <div class="text-center sm:text-left">
+          <p class="text-white font-semibold text-lg mb-1">AI Reader V2</p>
+          <p class="text-sm">本地部署的智能小说阅读理解系统</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-6 text-sm">
+          <a href="https://github.com/mouseart2025/AI-Reader-V2" target="_blank" rel="noopener" class="hover:text-white transition">GitHub</a>
+          <a href="https://github.com/mouseart2025/AI-Reader-V2/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="hover:text-white transition">贡献指南</a>
+          <a href="https://github.com/mouseart2025/AI-Reader-V2/blob/main/LICENSE" target="_blank" rel="noopener" class="hover:text-white transition">AGPL v3</a>
+          <a href="https://github.com/mouseart2025/AI-Reader-V2/blob/main/LICENSE-COMMERCIAL.md" target="_blank" rel="noopener" class="hover:text-white transition">商业许可</a>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+        <p>v0.42.0 · 40 个 Epic · 208 个 Story · 全部完成</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

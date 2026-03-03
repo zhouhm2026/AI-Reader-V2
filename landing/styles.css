@@ -1,0 +1,28 @@
+/* AI Reader V2 — Landing Page Custom Styles */
+/* Tailwind CSS handles most styling via CDN. This file covers extras. */
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Code block styling */
+pre code {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Consolas', monospace;
+}
+
+/* Subtle gradient animation for hero badge area */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Screenshot placeholder pulse */
+.placeholder-pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
