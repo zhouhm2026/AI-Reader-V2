@@ -11,18 +11,40 @@ pre code {
   font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Consolas', monospace;
 }
 
-/* Subtle gradient animation for hero badge area */
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+/* Hero screenshot float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.float-animation {
+  animation: float 6s ease-in-out infinite;
 }
 
-/* Screenshot placeholder pulse */
-.placeholder-pulse {
-  animation: pulse 3s ease-in-out infinite;
+/* Hero radial gradient glow */
+.hero-glow {
+  background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(59,130,246,0.12) 0%, transparent 70%);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+/* Tabular numbers for stats alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* CTA button glow on hover */
+.cta-glow {
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.cta-glow:hover {
+  box-shadow: 0 0 24px rgba(59,130,246,0.4), 0 0 48px rgba(59,130,246,0.15);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .float-animation,
+  [class*="animate-"] {
+    animation: none !important;
+  }
+  .cta-glow {
+    transition: none !important;
+  }
 }
