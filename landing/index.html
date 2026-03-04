@@ -108,14 +108,24 @@
           </div>
         </div>
 
-        <!-- Screenshot side (65%) -->
+        <!-- Interactive graph (65%) -->
         <div class="w-full lg:w-[65%]">
-          <!-- TODO: 替换为实际功能截图 — 主界面关系图 -->
-          <div class="float-animation rounded-xl border-2 border-dashed border-slate-700 bg-slate-900/50 aspect-video flex items-center justify-center">
-            <div class="text-center text-slate-500">
-              <svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"/></svg>
-              <p class="text-sm">功能截图 · 待添加</p>
-            </div>
+          <div class="float-animation rounded-xl border border-slate-700/50 overflow-hidden shadow-2xl shadow-blue-500/10 aspect-video relative">
+            <iframe
+              src="/demo/honglou/graph?embed=1"
+              class="w-full h-full border-0"
+              loading="eager"
+              title="红楼梦人物关系图 — 交互式 Demo"
+            ></iframe>
+            <!-- Click overlay — redirects to full demo -->
+            <a
+              href="/demo/honglou/graph"
+              class="absolute inset-0 z-10 flex items-end justify-center pb-4 opacity-0 hover:opacity-100 transition-opacity bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"
+            >
+              <span class="rounded-full bg-blue-500/90 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur">
+                点击进入完整 Demo →
+              </span>
+            </a>
           </div>
         </div>
       </div>
@@ -159,9 +169,8 @@
               <h3 class="text-xl font-semibold text-white">智能知识图谱 Knowledge Graph</h3>
             </div>
             <p class="text-slate-400 mb-4">力导向人物关系图，自动识别 70+ 种关系类型，六大分类着色（血亲/亲密/师承/社交/敌对/其他），实体别名自动合并。</p>
-            <!-- TODO: 替换为实际截图 — 关系图 -->
-            <div class="rounded-lg border-2 border-dashed border-slate-700 bg-slate-800/50 aspect-video flex items-center justify-center">
-              <span class="text-slate-500 text-sm">关系图截图 · 待添加</span>
+            <div class="rounded-lg border border-slate-700/50 overflow-hidden aspect-video">
+              <iframe src="/demo/honglou/graph?embed=1" class="w-full h-full border-0" loading="lazy" title="关系图 Demo"></iframe>
             </div>
           </div>
 
@@ -172,9 +181,8 @@
               <h3 class="text-xl font-semibold text-white">多层级世界地图 World Map</h3>
             </div>
             <p class="text-slate-400 mb-4">从小说文本全自动生成交互式地图。宏观区域划分、多空间层、传送门连接、程序化地形生成、人物轨迹动画、手绘风格渲染。</p>
-            <!-- TODO: 替换为实际截图 — 世界地图 -->
-            <div class="rounded-lg border-2 border-dashed border-slate-700 bg-slate-800/50 aspect-video flex items-center justify-center">
-              <span class="text-slate-500 text-sm">世界地图截图 · 待添加</span>
+            <div class="rounded-lg border border-slate-700/50 overflow-hidden aspect-video">
+              <iframe src="/demo/honglou/map?embed=1" class="w-full h-full border-0" loading="lazy" title="世界地图 Demo"></iframe>
             </div>
           </div>
 
@@ -185,9 +193,8 @@
               <h3 class="text-xl font-semibold text-white">多泳道时间线 Timeline</h3>
             </div>
             <p class="text-slate-400 mb-4">多泳道事件线，智能降噪，关系变化事件追踪，情绪基调标签，按章节浏览和按类型过滤。</p>
-            <!-- TODO: 替换为实际截图 — 时间线 -->
-            <div class="rounded-lg border-2 border-dashed border-slate-700 bg-slate-800/50 aspect-video flex items-center justify-center">
-              <span class="text-slate-500 text-sm">时间线截图 · 待添加</span>
+            <div class="rounded-lg border border-slate-700/50 overflow-hidden aspect-video">
+              <iframe src="/demo/honglou/timeline?embed=1" class="w-full h-full border-0" loading="lazy" title="时间线 Demo"></iframe>
             </div>
           </div>
 
@@ -198,9 +205,8 @@
               <h3 class="text-xl font-semibold text-white">百科全书 Encyclopedia</h3>
             </div>
             <p class="text-slate-400 mb-4">分类浏览人物/地点/物品/组织/概念，全文搜索，地点层级树，空间关系面板，场景索引回溯原文。</p>
-            <!-- TODO: 替换为实际截图 — 百科全书 -->
-            <div class="rounded-lg border-2 border-dashed border-slate-700 bg-slate-800/50 aspect-video flex items-center justify-center">
-              <span class="text-slate-500 text-sm">百科全书截图 · 待添加</span>
+            <div class="rounded-lg border border-slate-700/50 overflow-hidden aspect-video">
+              <iframe src="/demo/honglou/encyclopedia?embed=1" class="w-full h-full border-0" loading="lazy" title="百科全书 Demo"></iframe>
             </div>
           </div>
         </div>
