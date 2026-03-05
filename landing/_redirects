@@ -1,7 +1,0 @@
-# Cloudflare Pages SPA fallback for demo routes
-# Cannot use /demo/* — it intercepts /demo/assets/ static files too
-# List novel slugs explicitly to avoid catching static assets
-/demo/honglou /demo-spa.html 200
-/demo/honglou/* /demo-spa.html 200
-/demo/xiyouji /demo-spa.html 200
-/demo/xiyouji/* /demo-spa.html 200
