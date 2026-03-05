@@ -1,2 +1,3 @@
 # Cloudflare Pages SPA fallback for demo routes
-/demo/* /demo/index.html 200
+# Target must be outside /demo/* to avoid redirect loops
+/demo/* /demo-spa.html 200
